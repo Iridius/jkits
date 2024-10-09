@@ -13,7 +13,6 @@ import java.util.Objects;
 @Configuration
 public class DataSourceConfig {
     @Bean
-    //@Primary
     public DataSource createPostgresDataSource(
             @Value("${spring.datasource.url}") String url,
             @Value("${spring.datasource.login}") String login,
@@ -27,9 +26,9 @@ public class DataSourceConfig {
         dataSourceBuilder.password(password);
 
         BasicDataSource ds = dataSourceBuilder.build();
-        ds.setValidationQueryTimeout(30);
         ds.setFastFailValidation(true);
         ds.setTestOnBorrow(true);
+        ds.setAutoCommitOnReturn(true);
         ds.setConnectionProperties("prepareThreshold=0");
 
         return ds;
